@@ -1,6 +1,7 @@
+import { EXPO_PUBLIC_API_URL } from '@env';
 import axios from "axios";
 
-const API = process.env.EXPO_PUBLIC_API_URL;
+const API = EXPO_PUBLIC_API_URL;
 
 const forecastEndpoint = params => `https://api.weatherapi.com/v1/forecast.json?key=${API}&q=${params.cityName}&days=${params.days}&aqi=no&alerts=no`;
 const locationsEndpoint = params => `https://api.weatherapi.com/v1/search.json?key=${API}&q=${params.cityName}`;
