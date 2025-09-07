@@ -55,8 +55,8 @@ function HomeScreen() {
             <StatusBar barStyle={'light-content'} />
             <ImageBackground
                 source={require('../assets/images/bg.png')}
-                resizeMode="stretch"
-                blurRadius={60}
+                resizeMode="cover"
+                blurRadius={50}
                 style={{ position: 'absolute', height: '100%', width: '100%' }}
             />
                 {isLoading ?
