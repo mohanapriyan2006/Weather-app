@@ -69,12 +69,14 @@ function HomeScreen() {
                         <View className="flex-row justify-end items-center"
                             style={{ backgroundColor: showSearch ? theme.bgWhite(0.25) : 'transparent', borderRadius: showSearch ? 50 : 0 }}>
                             {
-                                showSearch &&
+                                showSearch ?
                                 <TextInput
                                     onChangeText={handleTextDebounce}
                                     placeholder='Search city'
                                     placeholderTextColor={'lightgray'}
                                     className="h-10 pl-6 flex-1 text-base text-white" />
+                                    :
+                                    <Text className="text-lg underline text-gray-200 text-center pl-[100px] w-full">Weather Report</Text>
                             }
 
                             <TouchableOpacity
