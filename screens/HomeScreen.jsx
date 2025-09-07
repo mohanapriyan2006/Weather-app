@@ -1,6 +1,6 @@
 import { debounce } from "lodash";
 import { useCallback, useEffect, useState } from 'react';
-import { Image, SafeAreaView, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { CalendarDaysIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
 import { MapPinIcon } from "react-native-heroicons/solid";
 import { fetchWeatherForeCast, fetchWeatherLocations } from "../api/weather";
@@ -51,166 +51,168 @@ function HomeScreen() {
     }, []);
 
     return (
-        <View className="flex-1 relative">
+        <View className="flex-1 w-dvw h-dvh relative overflow-y-hidden overflow-x-hidden">
             <StatusBar barStyle={'light-content'} />
-            <Image blurRadius={50}
+            <ImageBackground
                 source={require('../assets/images/bg.png')}
-                accessibilityLabel="bg image"
-                className="absolute h-full w-full" />
-            {isLoading ?
-                <View className="flex-1 flex flex-col justify-center items-center gap-4">
-                    <View className="h-20 w-20 border-[8px] border-b-0 border-blue-300 animate-spin rounded-full"></View>
-                    <Text className="text-blue-200 ml-2 text-lg font-semibold animate-pulse">
-                        Loading...</Text>
-                </View>
-                : <SafeAreaView className='flex flex-1'>
-                    {/* Search Section */}
-                    <View style={{ height: '7%', width: '90%' }} className="mb-4 border-0 pt-4 mx-4 relative z-50">
-                        <View className="flex-row justify-end items-center"
-                            style={{ backgroundColor: showSearch ? theme.bgWhite(0.25) : 'transparent', borderRadius: showSearch ? 50 : 0 }}>
-                            {
-                                showSearch ?
-                                <TextInput
-                                    onChangeText={handleTextDebounce}
-                                    placeholder='Search city'
-                                    placeholderTextColor={'lightgray'}
-                                    className="h-10 pl-6 flex-1 text-base text-white" />
-                                    :
-                                    <Text className="text-lg underline text-gray-200 text-center pl-[100px] w-full">Weather Report</Text>
-                            }
-
-                            <TouchableOpacity
-                                onPress={() => setShowSearch(!showSearch)}
-                                style={{ backgroundColor: theme.bgWhite(0.3) }}
-                                className="rounded-full p-3 m-1">
-                                <MagnifyingGlassIcon size="25" color="white" />
-                            </TouchableOpacity>
-                        </View>
-
-                        {locations.length > 0 && showSearch ? (
-                            <View className="absolute w-full bg-gray-300 top-20 rounded-3xl">
+                resizeMode="stretch"
+                blurRadius={60}
+                style={{ position: 'absolute', height: '100%', width: '100%' }}
+            />
+                {isLoading ?
+                    <View className="flex-1 flex flex-col justify-center items-center gap-4">
+                        <View className="h-20 w-20 border-[8px] border-b-0 border-blue-300 animate-spin rounded-full"></View>
+                        <Text className="text-blue-200 ml-2 text-lg font-semibold animate-pulse">
+                            Loading...</Text>
+                    </View>
+                    : <SafeAreaView className='flex flex-1'>
+                        {/* Search Section */}
+                        <View style={{ height: '7%', width: '90%' }} className="mb-4 border-0 pt-4 mx-4 relative z-50">
+                            <View className="flex-row justify-end items-center"
+                                style={{ backgroundColor: showSearch ? theme.bgWhite(0.25) : 'transparent', borderRadius: showSearch ? 50 : 0 }}>
                                 {
-                                    locations.map((loc, index) => {
-                                        let showBorder = index + 1 !== locations.length;
-                                        let borderClass = showBorder ? " border-b-2 border-gray-300 " : "";
-                                        return (
-                                            <TouchableOpacity
-                                                onPress={() => handleLocation(loc)}
-                                                key={index}
-                                                className={"flex-row gap-2 items-center p-4 mb-1" + borderClass}
-                                            >
-                                                <MapPinIcon size={20} color={'gray'} />
-                                                <Text>{loc.name} , {loc.region}</Text>
-                                            </TouchableOpacity>
-                                        )
-                                    })
+                                    showSearch ?
+                                        <TextInput
+                                            onChangeText={handleTextDebounce}
+                                            placeholder='Search city'
+                                            placeholderTextColor={'lightgray'}
+                                            className="h-10 pl-6 flex-1 text-base text-white" />
+                                        :
+                                        <Text className="text-lg underline text-gray-200 text-center pl-[100px] w-full">Weather Report</Text>
                                 }
+
+                                <TouchableOpacity
+                                    onPress={() => setShowSearch(!showSearch)}
+                                    style={{ backgroundColor: theme.bgWhite(0.3) }}
+                                    className="rounded-full p-3 m-1">
+                                    <MagnifyingGlassIcon size="25" color="white" />
+                                </TouchableOpacity>
                             </View>
-                        ) : null}
 
-                    </View>
+                            {locations.length > 0 && showSearch ? (
+                                <View className="absolute w-full bg-gray-300 top-20 rounded-3xl">
+                                    {
+                                        locations.map((loc, index) => {
+                                            let showBorder = index + 1 !== locations.length;
+                                            let borderClass = showBorder ? " border-b-2 border-gray-300 " : "";
+                                            return (
+                                                <TouchableOpacity
+                                                    onPress={() => handleLocation(loc)}
+                                                    key={index}
+                                                    className={"flex-row gap-2 items-center p-4 mb-1" + borderClass}
+                                                >
+                                                    <MapPinIcon size={20} color={'gray'} />
+                                                    <Text>{loc.name} , {loc.region}</Text>
+                                                </TouchableOpacity>
+                                            )
+                                        })
+                                    }
+                                </View>
+                            ) : null}
 
-                    {/* forecast section */}
-                    <View
-                        className="mx-6 p-4 flex justify-around flex-1 my-4"
-                        style={{ backgroundColor: theme.bgWhite(0.1), borderRadius: 25 }}>
+                        </View>
 
-                        {/* location */}
-                        <Text className="text-white text-center text-2xl font-bold">
-                            {location?.name}
-                            <Text className="text-lg font-semibold text-gray-300">
-                                , {location?.country}
+                        {/* forecast section */}
+                        <View
+                            className="mx-6 p-4 flex justify-around flex-1 my-4"
+                            style={{ backgroundColor: theme.bgWhite(0.1), borderRadius: 25 }}>
+
+                            {/* location */}
+                            <Text className="text-white text-center text-2xl font-bold">
+                                {location?.name}
+                                <Text className="text-lg font-semibold text-gray-300">
+                                    , {location?.country}
+                                </Text>
                             </Text>
-                        </Text>
 
-                        {/* weather image */}
-                        <View className="flex-row justify-center">
-                            <Image
-                                source={{ uri: `https:${current?.condition?.icon}` }}
-                                style={{ height: 120, width: 120 }}
-                                className="-my-10" />
-                        </View>
-
-                        {/* Degree celcius */}
-                        <View className="space-y-2">
-                            <Text className="text-center ml-4 text-4xl font-bold text-white">
-                                {current?.temp_c}&#176;
-                            </Text>
-                            <Text className="text-center text-white text-lg font-semibold tracking-widest">
-                                {current?.condition.text}
-                            </Text>
-                        </View>
-
-                        {/* other stats */}
-                        <View className="flex-row justify-between mx-2 gap-4">
-
-                            <View className="flex-row space-x-2 items-center">
+                            {/* weather image */}
+                            <View className="flex-row justify-center">
                                 <Image
-                                    source={require('../assets/images/wind.png')}
-                                    style={{ height: 30, width: 30 }} />
-                                <Text className="text-white font-semibold text-base">{current?.wind_kph} km</Text>
+                                    source={{ uri: `https:${current?.condition?.icon}` }}
+                                    style={{ height: 120, width: 120 }}
+                                    className="-my-10" />
                             </View>
 
-
-                            <View className="flex-row space-x-2 items-center">
-                                <Image
-                                    source={require('../assets/images/humidity.png')}
-                                    style={{ height: 30, width: 30 }} />
-                                <Text className="text-white font-semibold text-base">{current?.humidity}%</Text>
+                            {/* Degree celcius */}
+                            <View className="space-y-2">
+                                <Text className="text-center ml-4 text-4xl font-bold text-white">
+                                    {current?.temp_c}&#176;
+                                </Text>
+                                <Text className="text-center text-white text-lg font-semibold tracking-widest">
+                                    {current?.condition.text}
+                                </Text>
                             </View>
 
+                            {/* other stats */}
+                            <View className="flex-row justify-between mx-2 gap-4">
 
-                            <View className="flex-row space-x-2 items-center">
-                                <Image
-                                    source={require('../assets/images/sunrise.png')}
-                                    style={{ height: 30, width: 30 }} />
-                                <Text className="text-white font-semibold text-base">{weather?.forecast?.forecastday[0]?.astro?.sunrise}</Text>
+                                <View className="flex-row space-x-2 items-center">
+                                    <Image
+                                        source={require('../assets/images/wind.png')}
+                                        style={{ height: 30, width: 30 }} />
+                                    <Text className="text-white font-semibold text-base">{current?.wind_kph} km</Text>
+                                </View>
+
+
+                                <View className="flex-row space-x-2 items-center">
+                                    <Image
+                                        source={require('../assets/images/humidity.png')}
+                                        style={{ height: 30, width: 30 }} />
+                                    <Text className="text-white font-semibold text-base">{current?.humidity}%</Text>
+                                </View>
+
+
+                                <View className="flex-row space-x-2 items-center">
+                                    <Image
+                                        source={require('../assets/images/sunrise.png')}
+                                        style={{ height: 30, width: 30 }} />
+                                    <Text className="text-white font-semibold text-base">{weather?.forecast?.forecastday[0]?.astro?.sunrise}</Text>
+                                </View>
+
                             </View>
 
                         </View>
 
-                    </View>
+                        {/* forecast for next days */}
+                        <View className="mb-6 space-y-3">
+                            <View className="flex-row items-center mx-5 my-1 space-x-2">
+                                <CalendarDaysIcon size={"22"} color={'white'} />
+                                <Text className="text-white text-base">Daily forecast</Text>
+                            </View>
 
-                    {/* forecast for next days */}
-                    <View className="mb-6 space-y-3">
-                        <View className="flex-row items-center mx-5 my-1 space-x-2">
-                            <CalendarDaysIcon size={"22"} color={'white'} />
-                            <Text className="text-white text-base">Daily forecast</Text>
-                        </View>
+                            <ScrollView
+                                horizontal
+                                contentContainerStyle={{ paddingHorizontal: 15 }}
+                                showsHorizontalScrollIndicator={false}>
+                                {
+                                    weather?.forecast?.forecastday?.map((item, index) => {
+                                        let date = new Date(item.date);
+                                        let options = { weekday: 'long' };
+                                        let dayName = date.toLocaleDateString('en-US', options);
+                                        dayName = dayName.split(',')[0];
 
-                        <ScrollView
-                            horizontal
-                            contentContainerStyle={{ paddingHorizontal: 15 }}
-                            showsHorizontalScrollIndicator={false}>
-                            {
-                                weather?.forecast?.forecastday?.map((item, index) => {
-                                    let date = new Date(item.date);
-                                    let options = { weekday: 'long' };
-                                    let dayName = date.toLocaleDateString('en-US', options);
-                                    dayName = dayName.split(',')[0];
-
-                                    return (
-                                        <View
-                                            key={index}
-                                            style={{ backgroundColor: theme.bgWhite(0.15) }}
-                                            className="flex justify-center items-center  w-24 rounded-3xl py-3 space-y-1 mr-4">
-                                            <Image
-                                                source={{ uri: `https:${item?.day?.condition?.icon}` }}
-                                                style={{ height: 50, width: 50 }} />
-                                            <Text className="text-white">{dayName}</Text>
-                                            <Text className="text-white text-xl font-semibold">{item?.day?.avgtemp_c}&#176;</Text>
-                                        </View>
+                                        return (
+                                            <View
+                                                key={index}
+                                                style={{ backgroundColor: theme.bgWhite(0.15) }}
+                                                className="flex justify-center items-center  w-24 rounded-3xl py-3 space-y-1 mr-4">
+                                                <Image
+                                                    source={{ uri: `https:${item?.day?.condition?.icon}` }}
+                                                    style={{ height: 50, width: 50 }} />
+                                                <Text className="text-white">{dayName}</Text>
+                                                <Text className="text-white text-xl font-semibold">{item?.day?.avgtemp_c}&#176;</Text>
+                                            </View>
+                                        )
+                                    }
                                     )
                                 }
-                                )
-                            }
 
-                        </ScrollView>
+                            </ScrollView>
 
-                    </View>
+                        </View>
 
-                </SafeAreaView>
-            }
+                    </SafeAreaView>
+                }
 
         </View>
     )
