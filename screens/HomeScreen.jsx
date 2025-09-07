@@ -59,7 +59,7 @@ function HomeScreen() {
                 className="absolute h-full w-full" />
             {isLoading ?
                 <View className="flex-1 flex flex-col justify-center items-center gap-4">
-                    <View className="h-20 w-20 border-[8px] border-b-transparent border-blue-300 animate-spin rounded-full"></View>
+                    <View className="h-20 w-20 border-[8px] border-b-0 border-blue-300 animate-spin rounded-full"></View>
                     <Text className="text-blue-200 ml-2 text-lg font-semibold animate-pulse">
                         Loading...</Text>
                 </View>
