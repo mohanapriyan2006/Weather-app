@@ -11,6 +11,12 @@ A sleek and modern weather application built with React Native that delivers rea
   <img src="./screenshot/image2.jpg" width="300" alt="Weather App Forecast" />
 </div>
 
+## Preview 
+
+<div align="center">
+  <img src="./screenshot/preview.gif" width="300" alt="Weather App Home" />
+</div>
+
 ## ⚡ Features
 
 - 🔍 **Smart Search** - Find weather for any city worldwide
