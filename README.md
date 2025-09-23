@@ -1,50 +1,61 @@
-# Welcome to your Expo app 👋
+# 🌤️ Weather App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **Beautiful weather forecasts at your fingertips** ✨
 
-## Get started
+A sleek and modern weather application built with React Native that delivers real-time weather information with stunning visuals and smooth animations.
 
-1. Install dependencies
+## 📱 Screenshots
 
-   ```bash
-   npm install
-   ```
+<div align="center">
+  <img src="./screenshot/image1.jpg" width="300" alt="Weather App Home" />
+  <img src="./screenshot/image2.jpg" width="300" alt="Weather App Forecast" />
+</div>
 
-2. Start the app
+## Preview 
 
-   ```bash
-   npx expo start
-   ```
+<div align="center">
+  <img src="./screenshot/preview.gif" width="300" alt="Weather App Home" />
+</div>
 
-In the output, you'll find options to open the app in a
+## ⚡ Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- 🔍 **Smart Search** - Find weather for any city worldwide
+- 📊 **7-Day Forecast** - Plan ahead with detailed predictions
+- 🌡️ **Real-time Data** - Current temperature, humidity, and wind speed
+- 📍 **Location Memory** - Saves your last searched location
+- 🎨 **Beautiful UI** - Clean design with smooth animations
+- ⏰ **Live Clock** - Real-time display in the header
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🛠️ Tech Stack
 
-## Get a fresh project
+- **React Native** + **Expo** - Cross-platform mobile development
+- **NativeWind** - Tailwind CSS for React Native styling
+- **Weather API** - Real-time weather data
+- **AsyncStorage** - Local data persistence
+- **React Navigation** - Smooth app navigation
 
-When you're ready, run:
+## 🚀 Quick Start
 
 ```bash
-npm run reset-project
+# Install dependencies
+npm install
+
+# Start the development server
+npx expo start
+
+# Choose your platform
+# Press 'a' for Android | 'i' for iOS | 'w' for Web
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 📝 API Setup
 
-## Learn more
+1. Get your free API key from [WeatherAPI.com](https://www.weatherapi.com/)
+2. Create a `.env` file in the root directory
+3. Add your API key:
+   ```
+   EXPO_PUBLIC_API_URL=your_api_key_here
+   ```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+**Made with ❤️ using React Native & NativeWind**
